@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+require 'slop'
+require 'damn_weather'
+
+include DamnWeather
+DamnWeather::db_file_check
+
+option = Slop.parse do |o|
+  o.bool '-n', '--now'
+  o.integer '-f', '--forecast', default: 1
+  o.on '-h', '--help' do
+    puts <<-HELP
+Damn emoji weather for your terminal! \xF0\x9F\x94\x86  \xF0\x9F\x92\x96  \xF0\x9F\x98\x8E  \xF0\x9F\x91\x8D
+
+  Usage:
+
+    damn-weather                       one day forecast
+    damn-weather -f/--forecast [days]  forecast for [days]
+    damn-weather -n/--now              weather right now
+    damn-weather -v/--version          display gem version
+
+    damn-weather -h/--help             display this message
+
+    HELP
+    exit
+  end
+  o.on '-v', '--version' do
+    puts DamnWeather::VERSION
+    exit
+  end
+end.to_h
+
+case
+when option[:now]
+  DamnWeather::Now.new.info
+when option[:forecast]
+  DamnWeather::Forecast.new(option[:forecast]).info
+end
