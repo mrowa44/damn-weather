@@ -7,7 +7,8 @@ module DamnWeather
     end
 
     def weather
-      JSON.parse(`curl -s "http://api.openweathermap.org/data/2.5/forecast?lat=#{geo.lat}&lon=#{geo.lng}&cnt=#{@count}&units=metric&APPID=#{APP_ID}"`)
+      data = open("http://api.openweathermap.org/data/2.5/forecast?lat=#{geo.lat}&lon=#{geo.lng}&cnt=#{@count}&units=metric&APPID=#{APP_ID}").read
+      JSON.parse(data)
     end
 
     def city

@@ -3,7 +3,8 @@ module DamnWeather
     include Weather
 
     def weather
-      JSON.parse(`curl -s "http://api.openweathermap.org/data/2.5/weather?lat=#{geo.lat}&lon=#{geo.lng}&units=metric&APPID=#{APP_ID}"`)
+      data = open("http://api.openweathermap.org/data/2.5/weather?lat=#{geo.lat}&lon=#{geo.lng}&units=metric&APPID=#{APP_ID}").read
+      JSON.parse(data)
     end
 
     def id
