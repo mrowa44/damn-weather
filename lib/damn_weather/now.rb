@@ -27,7 +27,7 @@ module DamnWeather
     end
 
     def date
-      `date "+%d-%m-%y"`.strip
+      DateTime.now.strftime(format='%d-%m-%y')
     end
 
     def info
