@@ -28,7 +28,8 @@ module DamnWeather
     end
 
     def geo
-      MMGeoip.new(ip: `curl -s http://ipecho.net/plain`)
+      current_ip = open('http://ipecho.net/plain').read
+      MMGeoip.new(ip: current_ip)
     end
   end
 end
