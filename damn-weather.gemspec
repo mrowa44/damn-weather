@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.bindir        = "bin"
   spec.executables   << "damn-weather"
+  spec.files         = `git ls-files`.split("\n")
   spec.require_paths = ["lib", "bin"]
 
   spec.add_development_dependency "bundler"
